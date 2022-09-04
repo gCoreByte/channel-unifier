@@ -18,9 +18,10 @@ class LoopHandler:
         """Add additional tasks (eg integrations) to the loop"""
         self.loop.create_task(task)
 
-    async def create_callback(self, callback):
-        """Adds a callback, eg send_to_all"""
-        self.loop.call_soon(callback)
+    # TODO: rethink
+    # async def create_callback(self, callback):
+    #     """Adds a callback, eg send_to_all"""
+    #     self.loop.call_soon(callback)
 
     async def send_to_all(self, data: str, integration_name: str = "", username: str = "", avatar_url: str = None,
                           files: List = None):
