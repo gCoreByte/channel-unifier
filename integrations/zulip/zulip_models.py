@@ -83,10 +83,16 @@ class RegisterQueueResponse:
     max_message_id: int  # deprecated
     last_event_id: int
 
+@dataclass()
+class PresenceEvent(Event):
+    user_id: int
+    email: str # deprecated
+    server_timestamp: int
+    presence: object # TODO: how to handle dynamic keys
 
 @dataclass()
 class QueueEventsResponse:
     result: str
     msg: str
-    events: List[Union[HeartbeatEvent, MessageEvent]]
+    events: List[Union[MessageEvent, PresenceEvent, HeartbeatEvent]]
     queue_id: str
