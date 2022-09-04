@@ -3,6 +3,17 @@ from typing import List, Optional, Union
 
 
 @dataclass()
+class Event:
+    type: str
+    id: int
+
+
+@dataclass()
+class HeartbeatEvent(Event):
+    pass
+
+
+@dataclass()
 class EditHistory:
     prev_content: Optional[str]
     prev_rendered_content: Optional[str]
@@ -56,14 +67,13 @@ class Message:
 
 
 @dataclass()
-class MessageEvent:
-    id: int
-    type: str
+class MessageEvent(Event):
     message: Union[Message, dict]
     flags: List[str]
 
     def __post_init__(self):
         self.message = Message(**self.message)
+
 
 @dataclass()
 class RegisterQueueResponse:
@@ -73,6 +83,13 @@ class RegisterQueueResponse:
     zulip_version: str
     zulip_feature_level: int
     zulip_merge_base: str
-    max_message_id: int # deprecated
+    max_message_id: int  # deprecated
     last_event_id: int
 
+
+@dataclass()
+class QueueEventsResponse:
+    result: str
+    msg: str
+    events: List[Union[HeartbeatEvent, MessageEvent]]
+    queue_id: str
