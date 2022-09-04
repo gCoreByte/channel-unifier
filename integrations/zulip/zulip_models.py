@@ -68,11 +68,8 @@ class Message:
 
 @dataclass()
 class MessageEvent(Event):
-    message: Union[Message, dict]
+    message: Message
     flags: List[str]
-
-    def __post_init__(self):
-        self.message = Message(**self.message)
 
 
 @dataclass()
