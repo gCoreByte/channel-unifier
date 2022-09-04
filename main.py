@@ -13,6 +13,7 @@ def init_discord_webhooks(config_file_path: str):
     return webhooks
 
 def init_zulip_hooks(config_file_path: str, loop_handler: LoopHandler):
+    zulip_integrations = []
     with open(config_file_path, mode="r", encoding='utf-8') as file:
         config = yaml.safe_load(file)
         for zulip_config in config['zulip']:
@@ -20,7 +21,8 @@ def init_zulip_hooks(config_file_path: str, loop_handler: LoopHandler):
             domain = zulip_config['domain']
             email = zulip_config['email']
             zulip = Zulip(loop=loop_handler, email=email, api_key=api_key, domain=domain)
-            loop_handler.create_task(zulip.run())
+            zulip_integrations.append(zulip)
+    return zulip_integrations
 
 
 if __name__ == '__main__':
@@ -30,6 +32,7 @@ if __name__ == '__main__':
     loop = LoopHandler(discord_webhooks=discord_webhooks)
     # Add to integrations to loop
     zulip_integrations = init_zulip_hooks("config/zulip_config.yml", loop)
-
+    for zulip in zulip_integrations:
+        loop.create_task(zulip.run())
     # Event loop start
     loop.run_forever()
