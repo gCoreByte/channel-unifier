@@ -14,7 +14,7 @@ class LoopHandler:
         """Begins the loop"""
         self.loop.run_forever()
 
-    async def create_task(self, task):
+    def create_task(self, task):
         """Add additional tasks (eg integrations) to the loop"""
         self.loop.create_task(task)
 
@@ -27,4 +27,4 @@ class LoopHandler:
                           files: List = None):
         """Sends the specified message to all added Discord webhooks"""
         for webhook in self.discord_webhooks:
-            self.loop.create_task(webhook.send_to_user(data, integration_name, username, avatar_url, files))
+            self.loop.create_task(webhook.send_as_user(data, integration_name, username, avatar_url, files))
