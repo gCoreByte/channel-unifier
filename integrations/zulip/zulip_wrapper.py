@@ -1,10 +1,11 @@
-import asyncio
+
 import base64
 
 import aiohttp
 
 from dacite import from_dict
 from integrations.zulip.zulip_api import *
+from utils.loop_handler import LoopHandler
 from utils.url_helpers import replace_for_current
 from integrations.zulip.zulip_models import *
 
@@ -29,7 +30,7 @@ def filter_heartbeat(events: List[Event]) -> List[Event]:
 
 class Zulip:
     """Main wrapper of the Zulip integration"""
-    def __init__(self, loop: asyncio.AbstractEventLoop, email: str, api_key: str, domain: str) -> None:
+    def __init__(self, loop: LoopHandler, email: str, api_key: str, domain: str) -> None:
         self.last_event_id = None
         self.queue_id = None
         self.loop = loop
@@ -62,3 +63,17 @@ class Zulip:
         async with self.session.get(replace_for_current(GET_EVENTS_FROM_QUEUE, self.domain), params=params) as res:
             res_object: QueueEventsResponse = from_dict(QueueEventsResponse, await res.json())
             return res_object.events
+
+
+    async def run(self) -> None:
+        """Main event loop task"""
+        while True:
+            events = self.get_events()
+            relevant_events = filter_heartbeat(events)
+            if len(relevant_events) == 0:
+                # We received a heartbeat, nothing to do
+                continue
+            for event in relevant_events:
+                # TODO: create an EventHandler class, which would handle what event is sent to what function
+                message = event.message
+                self.loop.send_to_all(data=message.content,integration_name="Zulip", username=message.sender_full_name, avatar_url=message.avatar_url)
