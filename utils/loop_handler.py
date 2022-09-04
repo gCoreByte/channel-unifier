@@ -1,4 +1,5 @@
 import asyncio
+from typing import List
 
 
 class LoopHandler:
@@ -22,7 +23,7 @@ class LoopHandler:
         self.loop.call_soon(callback)
 
     async def send_to_all(self, data: str, integration_name: str = "", username: str = "", avatar_url: str = None,
-                          files: [] = None):
+                          files: List = None):
         """Sends the specified message to all added Discord webhooks"""
         for webhook in self.discord_webhooks:
             self.loop.create_task(webhook.send_to_user(data, integration_name, username, avatar_url, files))
