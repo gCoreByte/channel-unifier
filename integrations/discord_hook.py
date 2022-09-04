@@ -1,3 +1,4 @@
+from typing import List
 import aiohttp
 from discord import Webhook
 
@@ -7,7 +8,7 @@ class DiscordWebhook:
         self.webhook_url = webhook_url
 
     async def send_as_user(self, data: str, integration_name: str = "", username: str = "", avatar_url: str = None,
-                           files: [] = None):
+                           files: List = None):
         async with aiohttp.ClientSession() as session:
             webhook = Webhook.from_url(url=self.webhook_url, session=session)
 

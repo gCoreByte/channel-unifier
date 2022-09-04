@@ -1,0 +1,7 @@
+zulip:
+  - domain: example.org
+    api_key: example_key
+    email: example@example.org
+    event_types: [
+      message
+    ]
