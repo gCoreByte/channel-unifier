@@ -1,6 +1,6 @@
-<p align="center>
-  <h1 align="center">channel-unifier</h1>
-	<h3 align="center">A Python script to do what your TAs should've done long ago: use a single place to communicate.</h3>
+<p align="center">
+    <h1 align="center">channel-unifier</h1>
+    <h3 align="center">A Python script to do what your TAs should've done long ago: use a single place to communicate.</h3>
 </p>
 
 # Simple to use
