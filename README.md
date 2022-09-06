@@ -16,4 +16,5 @@ All the configuration is in the `/config` folder, which contains a config file f
 | Yes       | Zulip       |                                                                  |
 | Planned   | Slack       |                                                                  |
 | Planned   | CampusWire  |                                                                  |
+| Planned   | MS Teams    |                                                                  |
 
