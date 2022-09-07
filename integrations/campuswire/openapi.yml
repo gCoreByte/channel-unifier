@@ -1,0 +1,155 @@
+openapi: 3.0.3
+info:
+  title: Campuswire unofficial API docs
+  version: 0.1.0
+servers:
+  - url: https://api.campuswire.com/v1/
+
+tags:
+  - auth
+
+paths:
+  /auth/login:
+    post:
+      description: Send login details to the server
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  example: email@example.com
+                password:
+                  type: string
+                  example: password
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loginResponse.index'
+        '401':
+          description: Unauthorized
+    put:
+      description: Get detailed info after authorization
+      tags:
+        - auth
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loginResponse.show'
+        '401':
+          description: Unauthorized
+
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    preferences:
+      properties:
+        collapsedLeft:
+          type: boolean
+          example: true
+        sendReadReceipts:
+          type: boolean
+          example: true
+        reputationNoticeSeen:
+          type: boolean
+          example: true
+    pseudoUser:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: todo
+        firstName:
+          type: string
+          example: violet-lemming-79
+        slug:
+          type: string
+          example: todo
+    user:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: todo
+        slug:
+          type: string
+          example: todo
+        username:
+          type: string
+          example: john.doe9999
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        photo:
+          type: string
+          example: photo url
+        network:
+          type: string
+          format: uuid
+          example: todo
+        verified:
+          type: boolean
+          example: true
+        registered:
+          type: boolean
+          example: true
+        genus:
+          type: string
+          format: uuid
+          example: todo
+        preferences:
+         $ref: '#/components/schemas/preferences'
+        createdAt:
+          type: string
+          format: date-time
+          example: 2022-09-01T19:02:31.040725Z
+        pseudoUser:
+          $ref: '#/components/schemas/pseudoUser'
+        presence:
+          type: object
+        walkthrough:
+          type: integer
+          example: 7
+
+
+    loginResponse.index:
+      properties:
+        token:
+          type: string
+          format: byte
+          example: base64 string
+        expiresAt:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28Z
+    loginResponse.show:
+      allOf:
+        - $ref: '#/components/schemas/loginResponse.index'
+        - type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/user'
+            refreshed:
+              type: boolean
+              example: true
