@@ -28,7 +28,7 @@ class User:
   genus: str
   preferences: Preferences
   created_at: str
-  pseudoUser: PseudoUser
+  pseudoUser: Optional[PseudoUser]
   presence: object
   walkthrough: int
 
@@ -41,3 +41,34 @@ class LoginResponseSmall:
 class LoginResponse(LoginResponseSmall):
   user: User
   refreshed: bool
+
+@dataclass()
+class Hello:
+  id: int
+
+@dataclass()
+class World:
+  replyTo: int
+
+# TODO: Document events
+@dataclass()
+class PresenceChanged:
+  user: User
+  s: int
+
+@dataclass()
+class PresenceChangedSelf:
+  status: str
+  id: int
+
+@dataclass()
+class UserPointsChanged:
+  id: str
+  user: str
+  giver: str
+  group: str
+  type: str # this should be an enum
+  source: str
+  points: int
+  direction: str # this should be an enum
+  createdAt: str
