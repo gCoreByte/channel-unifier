@@ -51,6 +51,7 @@ class World:
   replyTo: int
 
 # TODO: Document events
+
 @dataclass()
 class PresenceChanged:
   user: User
@@ -72,3 +73,34 @@ class UserPointsChanged:
   points: int
   direction: str # this should be an enum
   createdAt: str
+
+@dataclass()
+class Author:
+  id: str
+  firstName: str
+  lastName: str
+  photo: str
+  registered: bool
+  slug: str
+  role: str
+
+@dataclass()
+class Message:
+  id: str
+  uuid: str
+  anonymousLevel: int
+  author: Author
+  conversation: str
+  body: str
+  createdAt: str
+  updatedAt: str
+  type: str
+  metadata: object
+  readState: object
+
+@dataclass()
+class MessageEvent:
+  message: Message
+  conversationId: str
+  conversationType: str
+
