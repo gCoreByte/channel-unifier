@@ -22,3 +22,4 @@ class EventType(Enum):
 
 # All valid endpoints that we currently use
 LOGIN_ENDPOINT = "https://api.campuswire.com/v1/auth/login"
+WS_ENDPOINT = "wss://api.campuswire.com/v1/ws"
