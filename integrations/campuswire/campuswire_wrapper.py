@@ -53,6 +53,11 @@ class Campuswire:
         helloEvent = from_dict(Hello, event)
         await ws.send_json({'event':'world', 'replyTo':event.id})
         return
+      elif event['event'] == EventType.WallPostCreated.value:
+        author = from_dict(Author, event['author'])
+        await self.loop.send_to_all(
+          event['body'], "Campuswire", name_helper(author.firstName, author.lastName), author.photo
+        )
 
     async def run(self):
         await self.authorize()

@@ -103,4 +103,3 @@ class MessageEvent:
   message: Message
   conversationId: str
   conversationType: str
-
