@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from importlib.metadata import metadata
 from typing import List, Optional, Union
 
 @dataclass()
@@ -104,3 +103,4 @@ class MessageEvent:
   message: Message
   conversationId: str
   conversationType: str
+
