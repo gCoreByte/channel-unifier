@@ -10,11 +10,11 @@ Built from the ground up with usage in mind, the script is runnable on any machi
 All the configuration is in the `/config` folder, which contains a config file for every supported integration. Simply make a copy, rename the `.example` extension and fill in the required data.
 
 # Supported apps
-| Supported | Application |                                                                  |
-|-----------|-------------|------------------------------------------------------------------|
-| Partially | Discord     | Currently includes sending to webhooks, does not support reading |
-| Yes       | Zulip       |                                                                  |
-| Planned   | Slack       |                                                                  |
-| Planned   | CampusWire  |                                                                  |
-| Planned   | MS Teams    |                                                                  |
+| Supported    | Application |                                                                  |
+|--------------|-------------|------------------------------------------------------------------|
+| Partially    | Discord     | Currently includes sending to webhooks, does not support reading |
+| Yes          | Zulip       |                                                                  |
+| Planned      | Slack       |                                                                  |
+| Experimental | CampusWire  |                                                                  |
+| Planned      | MS Teams    |                                                                  |
 
