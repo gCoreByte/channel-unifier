@@ -17,6 +17,7 @@ class EventType(Enum):
     World = 'world'
     Message = 'message' # TODO: how to differentiate between sent and received?
     Typing = 'typing'
+    WallPostCreated = 'wall-post-created'
 
 
 
