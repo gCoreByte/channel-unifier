@@ -54,14 +54,14 @@ class Campuswire:
         await ws.send_json({'event':'world', 'replyTo':event.id})
         return
       elif event['event'] == EventType.WallPostCreated.value:
-        if not event['data']['anonymous']:
+        if event['data'].has_key('anonymous'):
+            await self.loop.send_to_all(
+            event['data']['body'], "Campuswire", "Anonymous"
+            )
+        else:
             author = from_dict(Author, event['data']['author'])
             await self.loop.send_to_all(
             event['data']['body'], "Campuswire", name_helper(author.firstName, author.lastName), author.photo
-            )
-        else:
-            await self.loop.send_to_all(
-            event['data']['body'], "Campuswire", "Anonymous"
             )
 
 
