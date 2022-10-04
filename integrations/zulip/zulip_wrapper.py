@@ -88,12 +88,18 @@ class Zulip:
         if not self.last_event_id or not self.queue_id:
             await self.register_event_queue({"message"})
         while True:
-            events = await self.get_events()
-            relevant_events = filter_heartbeat(events, self.event_types)
-            if len(relevant_events) == 0:
-                # We received some irrelevant events, nothing to do
-                continue
-            for event in relevant_events:
-                # TODO: create an EventHandler class, which would handle what event is sent to what function
-                message = event.message
-                await self.loop.send_to_all(data=message.content, integration_name="Zulip", username=message.sender_full_name, avatar_url=message.avatar_url)
+            try:
+                events = await self.get_events()
+                relevant_events = filter_heartbeat(events, self.event_types)
+                if len(relevant_events) == 0:
+                    # We received some irrelevant events, nothing to do
+                    continue
+                for event in relevant_events:
+                    # TODO: create an EventHandler class, which would handle what event is sent to what function
+                    message = event.message
+                    await self.loop.send_to_all(data=message.content, integration_name="Zulip", username=message.sender_full_name, avatar_url=message.avatar_url)
+            except Exception as e:
+                print(e)
+                self.session = aiohttp.ClientSession(
+                    headers=generate_headers(self.email, self.api_key))
+                await self.register_event_queue({"message"})
